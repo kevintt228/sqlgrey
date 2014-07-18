@@ -482,6 +482,7 @@ sub setconfig($$$) {
 				    'WHERE parameter = ?');
     if (!defined $sth or !$sth->execute($param)) {
 	$self->mylog('dbaccess', 0, "error: couldn't access $config table: $DBI::errstr");
+	return undef if $param ne 'version'; # Only die for 'version' problems, which happen at startup.
 	$self->mydie('setconfig error',
 		     'Can\'t continue: config table unreadable');
     }
